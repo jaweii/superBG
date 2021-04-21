@@ -9,7 +9,7 @@
   "version": "0.0.3",
   "publisher": "jawei",
   "engines": {
-    "vscode": "^1.0.0"
+    "vscode": "^1.55.0"
   },
   "categories": [
     "Other"

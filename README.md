@@ -28,6 +28,10 @@ VS Code 背景增强插件，最大化利用屏幕空间。
 
 ![selectImages][2]
 
+### Prerequirements 前置条件
+
+VS Code version >=1.55.0
+
 ## Known Issues 已知问题
 
 - VS Code warning
