@@ -18,17 +18,27 @@ VS Code 背景增强插件，最大化利用屏幕空间。
 - support adjust the background transparency;
 - support background scale;
 
+## Demo
+
+![watchURL][1]
+
+![selectImages][2]
+
 ## Known Issues 已知问题
 
 - VS Code warning
   **"Your Code installation appears to be corrupt. Please reinstall."** warning appears after install the extension, you can click **"never show again"** to ignore it.
+
   VS Code 警告
   本插件安装后，或 vscode 升级后，VS Code 提示被篡改或损坏，这是因为 VS Code 未提供操作背景的 API ，本插件只好修改了两行主程序代码。
   **解决方案：选择提示右上角的 【不再提示】:**
 
-- When set website as background, due to security concerns, **SVG** image can not be loaded in website.(see https://code.visualstudio.com/api/working-with-extensions/publishing-extension#publishing-extensions)
+- When set website as background, due to security concerns, **SVG** image can not be loaded in website.
+  (see https://code.visualstudio.com/api/working-with-extensions/publishing-extension#publishing-extensions)
+
   网站作为背景**SVG**无法显示
-  可能是 VS Code 出于安全考虑，不允许页面中加载 SVG 图片，**尚无解决方法**。(见https://code.visualstudio.com/api/working-with-extensions/publishing-extension#publishing-extensions)
+  可能是 VS Code 出于安全考虑，不允许页面中加载 SVG 图片，**尚无解决方法**。
+  (见https://code.visualstudio.com/api/working-with-extensions/publishing-extension#publishing-extensions)
 
 ## Keyboard shortcuts 快捷键
 
@@ -55,3 +65,6 @@ VS Code 背景增强插件，最大化利用屏幕空间。
 | `superBG.emulatedWidth` |    `number`     | Adjust the value to emulate mobile device when website as background. 使用网站作为背景时，网站容器宽度缩放比，调整以便模拟不同设备, 0-100(%) |
 
 **Enjoy!**
+
+[1]: https://raw.githubusercontent.com/jaweii/superBG/master/demo/watchURL.gif
+[2]: https://raw.githubusercontent.com/jaweii/superBG/master/demo/selectImages.gif
