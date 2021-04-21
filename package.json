@@ -1,0 +1,184 @@
+{
+  "name": "superbg",
+  "displayName": "superBG",
+  "description": "Supercharge the background of VS Code, set window to transparent in another way.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.55.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "workspaceContains:*"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "SuperBG",
+      "properties": {
+        "superBG.disable": {
+          "type": "boolean",
+          "default": false,
+          "description": "disable the extension (隐藏背景)"
+        },
+        "superBG.images": {
+          "type": "array",
+          "default": [],
+          "description": "background image (背景图片)"
+        },
+        "superBG.activeImage": {
+          "type": "integer",
+          "default": 0,
+          "description": "active index of image array (多个图片时的指针索引)",
+          "readOnly": true
+        },
+        "superBG.url": {
+          "type": "string",
+          "default": "",
+          "description": "the URL of website as background (URL，网站作为背景)"
+        },
+        "superBG.opacity": {
+          "type": "number",
+          "default": 30,
+          "description": "the opacity of background image, 0-100(%) （背景内容透明度）"
+        },
+        "superBG.scale": {
+          "type": "number",
+          "default": 90,
+          "description": "the scale of background image, 0-100(%) （背景内容缩放）"
+        },
+        "superBG.emulatedWidth": {
+          "type": "number",
+          "default": 100,
+          "description": "adjust the value to emulate mobile device when use website as background, 0-100(%) (网站作为背景时，调整网站内容宽度百分比，已便模拟移动设备)"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "superBG.selectImages",
+        "title": "Select images",
+        "category": "SuperBG"
+      },
+      {
+        "command": "superBG.watchURL",
+        "title": "Watch URL",
+        "category": "SuperBG"
+      },
+      {
+        "command": "superBG.enableOrDisable",
+        "title": "Disable",
+        "category": "SuperBG"
+      },
+      {
+        "command": "superBG.increaseOpacity",
+        "title": "Increase opacity",
+        "category": "SuperBG"
+      },
+      {
+        "command": "superBG.decreaseOpacity",
+        "title": "Decrease opacity",
+        "category": "SuperBG"
+      },
+      {
+        "command": "superBG.increaseScale",
+        "title": "Increase scale",
+        "category": "SuperBG"
+      },
+      {
+        "command": "superBG.decreaseScale",
+        "title": "Decrease scale",
+        "category": "SuperBG"
+      },
+      {
+        "command": "superBG.previousImage",
+        "title": "Previous iamge",
+        "category": "SuperBG"
+      },
+      {
+        "command": "superBG.nextImage",
+        "title": "Next image",
+        "category": "SuperBG"
+      },
+      {
+        "command": "superBG.increaseEmulatedWidth",
+        "title": "Increase emulated width",
+        "category": "SuperBG"
+      },
+      {
+        "command": "superBG.decreaseEmulatedWidth",
+        "title": "Decrease emulated width",
+        "category": "SuperBG"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "superBG.increaseOpacity",
+        "mac": "ctrl+alt+up",
+        "key": "ctrl+alt+up"
+      },
+      {
+        "command": "superBG.decreaseOpacity",
+        "mac": "ctrl+alt+down",
+        "key": "ctrl+alt+down"
+      },
+      {
+        "command": "superBG.increaseScale",
+        "mac": "ctrl+alt+shift+up",
+        "key": "ctrl+alt+shift+up"
+      },
+      {
+        "command": "superBG.decreaseScale",
+        "mac": "ctrl+alt+shift+down",
+        "key": "ctrl+alt+shift+down"
+      },
+      {
+        "command": "superBG.previousImage",
+        "mac": "ctrl+alt+left",
+        "key": "ctrl+alt+left"
+      },
+      {
+        "command": "superBG.nextImage",
+        "mac": "ctrl+alt+right",
+        "key": "ctrl+alt+right"
+      },
+      {
+        "command": "superBG.enableOrDisable",
+        "mac": "ctrl+alt+s",
+        "key": "ctrl+alt+s"
+      },
+      {
+        "command": "superBG.increaseEmulatedWidth",
+        "mac": "ctrl+alt+shift+right",
+        "key": "ctrl+alt+shift+right"
+      },
+      {
+        "command": "superBG.decreaseEmulatedWidth",
+        "mac": "ctrl+alt+shift+left",
+        "key": "ctrl+alt+shift+left"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.3",
+    "@types/mocha": "^8.0.4",
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.55.0",
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/parser": "^4.14.1",
+    "eslint": "^7.19.0",
+    "glob": "^7.1.6",
+    "mocha": "^8.2.1",
+    "typescript": "^4.1.3",
+    "vscode-test": "^1.5.0"
+  }
+}
