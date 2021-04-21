@@ -1,5 +1,9 @@
 # superBG
 
+[![GitHub stars](https://img.shields.io/github/stars/jaweii/superBG)]() [![GitHub watchers](https://img.shields.io/github/forks/jaweii/superBG)]() [![GitHub forks](https://img.shields.io/github/issues/jaweii/superBG)]() [![GitHub forks](https://img.shields.io/github/license/jaweii/superBG)]()
+
+---
+
 ### Supercharge the background of VS Code
 
 VS Code 背景增强插件，最大化利用屏幕空间。
