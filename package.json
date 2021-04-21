@@ -1,7 +1,7 @@
 {
   "name": "superbg",
   "displayName": "superBG",
-  "icon": "./images/logo128.png",
+  "icon": "images/logo128.png",
   "description": "Supercharge the background of VS Code, set window to transparent in another way.",
   "repository": {
     "url": "https://github.com/jaweii/superBG"
@@ -9,7 +9,7 @@
   "version": "0.0.2",
   "publisher": "jawei",
   "engines": {
-    "vscode": "^1.55.0"
+    "vscode": "^1.0.0"
   },
   "categories": [
     "Other"
