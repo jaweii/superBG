@@ -50,7 +50,7 @@
         },
         "superBG.scale": {
           "type": "number",
-          "default": 90,
+          "default": 100,
           "description": "the scale of background image, 0-100(%) （背景内容缩放）"
         },
         "superBG.emulatedWidth": {
