@@ -4,7 +4,7 @@
 
 ---
 
-### Supercharge the background of VS Code
+## Supercharge the background of VS Code
 
 VS Code 背景增强插件，最大化利用屏幕空间。
 此插件诞生旨在弥补 VS Code 在 Mac 端不支持背景透明的遗憾。
