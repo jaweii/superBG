@@ -66,6 +66,9 @@ class SuperBG {
           "frame-src filesystem: *"
         );
         fs.writeFileSync(this.htmlPath, htmlContent, { encoding: "utf8" });
+        vscode.window.showInformationMessage(
+          "Restart VS Code to enable SuperBG."
+        );
       },
       removeSuperBGFromWorkbench() {
         let htmlContent = fs.readFileSync(this.htmlPath, { encoding: "utf8" });
@@ -117,7 +120,6 @@ class SuperBG {
     /** when initializing superBG in superBG.js, it will wait this file to be generated. */
     fs.writeFileSync(join(configPath, "../", "project.name"), firstProjectName);
     fs.copyFileSync(this.codePath, this.copiedCodePath);
-    vscode.window.showInformationMessage("Restart VS Code to enable SuperBG.");
   }
 
   removeConfigFile = (name: string) => {
