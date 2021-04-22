@@ -15,8 +15,7 @@
     "Other"
   ],
   "activationEvents": [
-    "workspaceContains:*",
-    "onCommand:superBG.enable"
+    "*"
   ],
   "main": "./out/extension.js",
   "contributes": {

@@ -1,4 +1,5 @@
-(function () {
+console.log(3)
+;(function () {
   /** those variables only changed once */
   let path, fs, projectName;
 

@@ -48,5 +48,5 @@ export function deactivate() {
   if (folders && folders?.length > 0) {
     superBG.removeConfigFile(folders[0].name);
   }
-  superBG.injecter.removeSuperBGFromWorkbench();
+  // superBG.injecter.removeSuperBGFromWorkbench();
 }

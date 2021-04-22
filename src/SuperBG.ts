@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import * as fs from "fs";
-import { join, dirname } from "path";
+import { join, dirname, basename } from "path";
 
 class SuperBG {
   constructor() {
@@ -30,16 +30,16 @@ class SuperBG {
     "workbench",
     "workbench.html"
   );
-
+  codePath = join(__dirname, "static/superBG.js");
+  copiedCodePath = join(dirname(this.workbenchPath), basename(this.codePath));
   get injecter() {
-    const { extensionDir, workbenchPath } = this;
+    const { extensionDir, workbenchPath, codePath } = this;
     return {
       htmlPath: workbenchPath,
       comment: "injected by superBG",
-      codePath: join(extensionDir, "static/superBG.js"),
       get scriptTag() {
         return `\n	<!-- ${this.comment} -->
-	<script src="${this.codePath}"></script>
+	<script src="superBG.js"></script>
   `;
       },
       /** modify workbench.html:
@@ -116,6 +116,8 @@ class SuperBG {
     });
     /** when initializing superBG in superBG.js, it will wait this file to be generated. */
     fs.writeFileSync(join(configPath, "../", "project.name"), firstProjectName);
+    fs.copyFileSync(this.codePath, this.copiedCodePath);
+    vscode.window.showInformationMessage("Restart VS Code to enable SuperBG.");
   }
 
   removeConfigFile = (name: string) => {
@@ -124,6 +126,7 @@ class SuperBG {
       fs.unlinkSync(p);
     }
     fs.unlinkSync(join(p, "../", "project.name"));
+    // fs.unlinkSync(this.copiedCodePath);
   };
 }
 

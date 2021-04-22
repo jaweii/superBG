@@ -39,6 +39,14 @@ VS Code 背景增强插件，最大化利用屏幕空间。
 - VS Code 版本大于等于 1.45.0
 - 在 Mac 上，你需要把 VS Code 安装到 `/Applications`目录, 否则你要以管理员模式打开 VS Code 才能正常使用插件(`sudo open "path/to/directory/VS Code.app"`)
 
+## Uninstall the extension 卸载
+
+You need to follow the steps above to uninstall the extension:
+
+请按照下面步骤卸载插件：
+
+`Command`+`shift`+`p` > `superBG.disable` > `uninstall extension`
+
 ## Known Issues 已知问题
 
 - VS Code warning
