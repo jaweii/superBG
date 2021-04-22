@@ -15,8 +15,8 @@ All notable changes to the "superBG" extension will be documented in this file.
 Fisrt version:
 
 - Support select multiple images as background, and switch background between them via shortcuts;
-- Supoprt website as background;
+- Supoprt set webpage as background;
 - support adjust the background transparency;
-- support background scale;
+- support scale background;
 
 **Enjoy!**

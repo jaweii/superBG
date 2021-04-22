@@ -9,13 +9,14 @@
   "version": "0.0.5",
   "publisher": "jawei",
   "engines": {
-    "vscode": "^1.55.0"
+    "vscode": "^1.45.0"
   },
   "categories": [
     "Other"
   ],
   "activationEvents": [
-    "workspaceContains:*"
+    "workspaceContains:*",
+    "onCommand:superBG.enable"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -41,7 +42,7 @@
         "superBG.url": {
           "type": "string",
           "default": "",
-          "description": "the URL of website as background (URL，网站作为背景)"
+          "description": "set web page as background (URL，网页作为背景)"
         },
         "superBG.opacity": {
           "type": "number",
@@ -56,11 +57,21 @@
         "superBG.emulatedWidth": {
           "type": "number",
           "default": 100,
-          "description": "adjust the value to emulate mobile device when use website as background, 0-100(%) (网站作为背景时，调整网站内容宽度百分比，已便模拟移动设备)"
+          "description": "adjust the value to emulate mobile device when set web page as background, 0-100(%) (网页作为背景时，调整网页内容宽度百分比，已便模拟移动设备)"
         }
       }
     },
     "commands": [
+      {
+        "command": "superBG.enable",
+        "title": "Enable",
+        "category": "SuperBG"
+      },
+      {
+        "command": "superBG.disable",
+        "title": "Disable",
+        "category": "SuperBG"
+      },
       {
         "command": "superBG.selectImages",
         "title": "Select images",
@@ -69,11 +80,6 @@
       {
         "command": "superBG.watchURL",
         "title": "Watch URL",
-        "category": "SuperBG"
-      },
-      {
-        "command": "superBG.enableOrDisable",
-        "title": "Disable",
         "category": "SuperBG"
       },
       {
@@ -149,7 +155,7 @@
         "key": "ctrl+alt+right"
       },
       {
-        "command": "superBG.enableOrDisable",
+        "command": "superBG.disable",
         "mac": "ctrl+alt+s",
         "key": "ctrl+alt+s"
       },
@@ -177,7 +183,7 @@
     "@types/glob": "^7.1.3",
     "@types/mocha": "^8.0.4",
     "@types/node": "^12.11.7",
-    "@types/vscode": "^1.55.0",
+    "@types/vscode": "^1.45.0",
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
     "eslint": "^7.19.0",

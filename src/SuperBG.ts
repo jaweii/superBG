@@ -1,23 +1,42 @@
-import * as path from "path";
 import * as vscode from "vscode";
 import * as fs from "fs";
+import { join, dirname } from "path";
 
 class SuperBG {
+  constructor() {
+    /** the name of main file may be different in different vscode version */
+    const list = getFiles(this.base);
+    const htmlFiles = list
+      .filter((f) => /.*browser.*workbench.*\.html$/.test(f))
+      .filter((p) => {
+        const content = fs.readFileSync(p, { encoding: "utf8" });
+        return content.indexOf("Startup") !== -1;
+      });
+    if (htmlFiles.length > 0) {
+      this.workbenchPath = htmlFiles[0];
+    }
+  }
   // @ts-ignore
-  base = path.dirname(require.main.filename);
+  base = dirname(require.main.filename);
   /** extension directory */
   extensionDir = __dirname;
 
-  get workbenchDIr() {
-    return path.join(this.base, "vs", "code", "electron-browser", "workbench");
-  }
+  workbenchPath = join(
+    // @ts-ignore
+    dirname(require.main.filename),
+    "vs",
+    "code",
+    "electron-browser",
+    "workbench",
+    "workbench.html"
+  );
 
   get injecter() {
-    const { extensionDir, workbenchDIr } = this;
+    const { extensionDir, workbenchPath } = this;
     return {
-      htmlPath: path.join(workbenchDIr, "workbench.html"),
+      htmlPath: workbenchPath,
       comment: "injected by superBG",
-      codePath: path.join(extensionDir, "static/superBG.js"),
+      codePath: join(extensionDir, "static/superBG.js"),
       get scriptTag() {
         return `\n	<!-- ${this.comment} -->
 	<script src="${this.codePath}"></script>
@@ -25,13 +44,14 @@ class SuperBG {
       },
       /** modify workbench.html:
        *  inject superBG.js to workbench,;
-       *  modify CSP to enable `video` element load local resource, enable `iframe` element load third party website;
+       *  modify CSP to enable `video` element load local resource, enable `iframe` element load third party web page;
        * */
       injectSuperBGToWorkbench() {
         let htmlContent = fs.readFileSync(this.htmlPath, { encoding: "utf8" });
         if (htmlContent.indexOf(this.comment) !== -1) {
-          this.removeSuperBGFromWorkbench();
-          htmlContent = fs.readFileSync(this.htmlPath, { encoding: "utf8" });
+          // this.removeSuperBGFromWorkbench();
+          // htmlContent = fs.readFileSync(this.htmlPath, { encoding: "utf8" });
+          return;
         }
         htmlContent = htmlContent.replace(
           `</html>`,
@@ -68,7 +88,7 @@ class SuperBG {
   }
 
   getConfigPath(name: string) {
-    return path.join(this.base, "superBG", name + ".config.json");
+    return join(this.base, "superBG", name + ".config.json");
   }
 
   asyncConfigFile() {
@@ -76,7 +96,7 @@ class SuperBG {
     const firstFolder = vscode.workspace.workspaceFolders[0];
     const workspaceDir = firstFolder.uri.path;
     const firstProjectName = firstFolder.name;
-    const superBGDir = path.join(this.base, "superBG");
+    const superBGDir = join(this.base, "superBG");
     if (!fs.existsSync(superBGDir)) {
       fs.mkdirSync(superBGDir);
     }
@@ -95,10 +115,7 @@ class SuperBG {
       encoding: "utf8",
     });
     /** when initializing superBG in superBG.js, it will wait this file to be generated. */
-    fs.writeFileSync(
-      path.join(configPath, "../", "project.name"),
-      firstProjectName
-    );
+    fs.writeFileSync(join(configPath, "../", "project.name"), firstProjectName);
   }
 
   removeConfigFile = (name: string) => {
@@ -106,8 +123,27 @@ class SuperBG {
     if (fs.existsSync(p)) {
       fs.unlinkSync(p);
     }
-    fs.unlinkSync(path.join(p, "../", "project.name"));
+    fs.unlinkSync(join(p, "../", "project.name"));
   };
+}
+
+function getFiles(dirPath: string) {
+  let files: string[] = [];
+  function findJsonFile(path: string) {
+    let childrens = fs.readdirSync(path);
+    childrens.forEach(function (item, index) {
+      let fPath = join(path, item);
+      let stat = fs.statSync(fPath);
+      if (stat.isDirectory() === true) {
+        findJsonFile(fPath);
+      }
+      if (stat.isFile() === true) {
+        files.push(fPath);
+      }
+    });
+  }
+  findJsonFile(dirPath);
+  return files;
 }
 
 export default new SuperBG();
