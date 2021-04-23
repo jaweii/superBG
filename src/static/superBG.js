@@ -89,7 +89,6 @@
     if (config.images && config.images.length > 0) {
       setImage(config.images[config.activeImage]);
     } else if (config.video) {
-      setVideo(config.video);
     } else if (config.url) {
       setURL(config.url, config.emulatedWidth);
     } else {
@@ -101,9 +100,9 @@
       return;
     }
     if (config.disable) {
-      content.style.display = "none";
+      content.style.visibility = "none";
     } else {
-      content.style.display = "block";
+      content.style.visibility = "block";
     }
     content.style.opacity = config.opacity / 100;
     content.style.transform = `scale(${config.scale / 100})`;
@@ -121,9 +120,7 @@
     div.className = "superBG-iamge";
     div.style.height = "100%";
     div.style.width = "100%";
-    div.style.display = "flex";
-    div.style.justifyContent = "center";
-    div.style.alignItems = "center";
+    div.style.textAlign = "center";
     const img = document.createElement("img");
     img.src = imgPath;
     img.style.maxWidth = "100%";
@@ -132,27 +129,6 @@
     clear();
     bg.append(div);
     mode = "image";
-  }
-
-  function setVideo(videoPath) {
-    const div = document.createElement("div");
-    div.className = "superBG-video";
-    div.style.height = "100%";
-    div.style.widows = "100%";
-    const video = document.createElement("video");
-    video.autoplay = true;
-    video.loop = true;
-    video.style.width = "100%";
-    video.style.height = "100%";
-    const source = document.createElement("source");
-    source.src = videoPath;
-    source.type = "video/mp4";
-    video.append(source);
-    div.append(video);
-    clear();
-    bg.append(div);
-    document.addEventListener("click", () => video.play());
-    mode = "video";
   }
 
   function setURL(url, emulatedWidth) {
