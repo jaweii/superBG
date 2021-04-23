@@ -92,7 +92,7 @@ class SuperBG {
     return join(this.base, "superBG", name + ".config.json");
   }
 
-  asyncConfigFile() {
+  asyncConfigFile(temp = {}) {
     // @ts-ignore
     const firstFolder = vscode.workspace.workspaceFolders[0];
     const workspaceDir = firstFolder.uri.path;
@@ -109,7 +109,8 @@ class SuperBG {
         workspaceDir,
         firstProjectName,
         updatedAt: Date.now(),
-      }
+      },
+      temp
     );
     const data = JSON.stringify(configJSON);
     const configPath = this.getConfigPath(firstProjectName);

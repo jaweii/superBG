@@ -120,6 +120,11 @@
         "command": "superBG.decreaseEmulatedWidth",
         "title": "Decrease emulated width",
         "category": "SuperBG"
+      },
+      {
+        "command": "superBG.pinToTop",
+        "title": "Pin web page to top",
+        "category": "SuperBG"
       }
     ],
     "keybindings": [
@@ -167,6 +172,11 @@
         "command": "superBG.decreaseEmulatedWidth",
         "mac": "ctrl+alt+shift+left",
         "key": "ctrl+alt+shift+left"
+      },
+      {
+        "command": "superBG.pinToTop",
+        "mac": "ctrl+alt+shift+p",
+        "key": "ctrl+alt+shift+p"
       }
     ]
   },

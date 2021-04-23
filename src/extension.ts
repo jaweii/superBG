@@ -12,6 +12,7 @@ import nextImage from "./commands/nextImage";
 import increaseEmulatedWidth from "./commands/increaseEmulatedWidth";
 import decreaseEmulatedWidth from "./commands/decreaseEmulatedWidth";
 import enable from "./commands/enable";
+import pinToTop from "./commands/pinToTop";
 import superBG from "./SuperBG";
 
 // this method is called when your extension is activated
@@ -35,6 +36,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(decreaseScale);
   context.subscriptions.push(increaseEmulatedWidth);
   context.subscriptions.push(decreaseEmulatedWidth);
+  context.subscriptions.push(pinToTop);
   vscode.window.onDidChangeActiveColorTheme((kind) => {
     superBG.asyncConfigFile();
   });

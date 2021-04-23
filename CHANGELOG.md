@@ -2,6 +2,11 @@
 
 All notable changes to the "superBG" extension will be documented in this file.
 
+## v1.1.0
+
+- 支持跟随主题背景色；
+- 支持“置顶”网页以便与其交互；
+
 ## v0.0.1
 
 完成第一版本：

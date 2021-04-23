@@ -6,13 +6,14 @@
    * @type {string} 'image' | 'video' | 'url|
    */
   let mode;
+  let config;
 
   const root = () => path.join(__filename, "../../../../..");
   const configPath = () =>
     path.join(root(), "superBG", projectName + ".config.json");
-  const getConfig = () => {
+  const refreshConfig = () => {
     const p = configPath(projectName);
-    return fs.existsSync(p) && JSON.parse(fs.readFileSync(p));
+    config = fs.existsSync(p) && JSON.parse(fs.readFileSync(p));
   };
 
   /** bg container */
@@ -20,20 +21,8 @@
   bg.className = "superBG";
 
   /** modify the VS Code style, and insert a bg container */
-  function initWindow(config) {
+  function initWindow() {
     if (!document.querySelector("." + bg.className)) {
-      bg.style.position = "absolute";
-      bg.style.width = "100vw";
-      bg.style.height = "100vh";
-      bg.style.right = "0";
-      bg.style.top = "0";
-      bg.style.overflow = "hidden";
-      // const backgroundColor = document
-      //   .querySelector(".monaco-workbench")
-      //   .computedStyleMap()
-      //   .get("background-color")
-      //   .toString();
-      // bg.style.backgroundColor = backgroundColor;
       document.body.appendChild(bg);
     }
     const style = document.createElement("style");
@@ -67,6 +56,25 @@
       .pane-header {
         background: none!important;
       }
+
+      .superBG {
+        position:  absolute;
+        width:  100vw;
+        height:  100vh;
+        right:  0;
+        top:  0;
+        overflow:  hidden;
+      }
+
+      .superBG.top {
+        position: fixed!important;
+        transform: scale(0.8);
+        z-index: 1!important;
+        box-shadow: 0px 10px 30px -10px rgba(0,0,0,.3)!important;
+      }
+      .superBG.top>div,.superBG.top>iframe{
+        opacity: 1!important;
+      }
   `;
       style.setAttribute("type", "text/css");
       style.append(styleContent);
@@ -74,11 +82,9 @@
     }
   }
 
-  function setBG(config) {
-    if (config.disable) {
-      bg.style.display = "none";
-    } else {
-      bg.style.display = "block";
+  function setBG() {
+    if (!config) {
+      return;
     }
     if (config.images && config.images.length > 0) {
       setImage(config.images[config.activeImage]);
@@ -89,9 +95,15 @@
     } else {
       clear();
     }
-    const content = document.querySelector(".superBG div");
+    pinTop(config.top);
+    const content = document.querySelector(".superBG").firstChild;
     if (!content) {
       return;
+    }
+    if (config.disable) {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
     }
     content.style.opacity = config.opacity / 100;
     content.style.transform = `scale(${config.scale / 100})`;
@@ -130,8 +142,6 @@
     const video = document.createElement("video");
     video.autoplay = true;
     video.loop = true;
-    // video.crossOrigin = true;
-    // video.muted = true;
     video.style.width = "100%";
     video.style.height = "100%";
     const source = document.createElement("source");
@@ -148,7 +158,9 @@
   function setURL(url, emulatedWidth) {
     if (mode === "url") {
       const iframe = bg.querySelector("iframe");
-      iframe.src = url;
+      if (iframe.src !== url) {
+        iframe.src = url;
+      }
       iframe.style.width = `${(emulatedWidth / 100) * window.outerWidth}px`;
       return;
     }
@@ -170,6 +182,18 @@
   function clear() {
     Array.from(bg.children).forEach((item) => item.remove());
   }
+
+  function pinTop(top) {
+    if (mode !== "url") {
+      return;
+    }
+    if (top) {
+      bg.classList.add("top");
+    } else {
+      bg.classList.remove("top");
+    }
+  }
+
   const delay = () => new Promise((resolve) => setTimeout(resolve, 100));
 
   async function initSuperBG() {
@@ -188,15 +212,15 @@
     projectName = projectName || fs.readFileSync(projectNameFilePath);
 
     const onConfigChange = (curState, prevState) => {
-      const config = getConfig();
-      if (!config) {
-        return;
-      }
-      initWindow(config);
-      setBG(config);
+      refreshConfig();
+      initWindow();
+      setBG();
     };
     fs.watchFile(configPath(), { interval: 0 }, onConfigChange);
     onConfigChange();
+    document.addEventListener("click", (e) => {
+      pinTop(false);
+    });
     console.log("superBG.js initiated");
   }
   setTimeout(initSuperBG, 0);
