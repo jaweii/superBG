@@ -49,8 +49,6 @@ class SuperBG {
       injectSuperBGToWorkbench() {
         let htmlContent = fs.readFileSync(this.htmlPath, { encoding: "utf8" });
         if (htmlContent.indexOf(this.comment) !== -1) {
-          // this.removeSuperBGFromWorkbench();
-          // htmlContent = fs.readFileSync(this.htmlPath, { encoding: "utf8" });
           return;
         }
         htmlContent = htmlContent.replace(
@@ -110,6 +108,7 @@ class SuperBG {
         extensionDir: this.extensionDir,
         workspaceDir,
         firstProjectName,
+        updatedAt: Date.now(),
       }
     );
     const data = JSON.stringify(configJSON);
@@ -128,7 +127,6 @@ class SuperBG {
       fs.unlinkSync(p);
     }
     fs.unlinkSync(join(p, "../", "project.name"));
-    // fs.unlinkSync(this.copiedCodePath);
   };
 }
 

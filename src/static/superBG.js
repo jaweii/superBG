@@ -1,5 +1,4 @@
-console.log(3)
-;(function () {
+(function () {
   /** those variables only changed once */
   let path, fs, projectName;
 
@@ -28,8 +27,13 @@ console.log(3)
       bg.style.height = "100vh";
       bg.style.right = "0";
       bg.style.top = "0";
-      bg.style.opacity = 0.5;
       bg.style.overflow = "hidden";
+      // const backgroundColor = document
+      //   .querySelector(".monaco-workbench")
+      //   .computedStyleMap()
+      //   .get("background-color")
+      //   .toString();
+      // bg.style.backgroundColor = backgroundColor;
       document.body.appendChild(bg);
     }
     const style = document.createElement("style");
@@ -41,9 +45,9 @@ console.log(3)
       }
       .editor>.content,
       .editor-container,
+      .monaco-workbench,
       .monaco-editor,
       .monaco-editor-background,
-      .monaco-workbench,
       .composite.title,
       .part.panel,
       .terminal-outer-container,
@@ -76,8 +80,6 @@ console.log(3)
     } else {
       bg.style.display = "block";
     }
-    bg.style.opacity = config.opacity / 100;
-    bg.style.transform = `scale(${config.scale / 100})`;
     if (config.images && config.images.length > 0) {
       setImage(config.images[config.activeImage]);
     } else if (config.video) {
@@ -87,6 +89,19 @@ console.log(3)
     } else {
       clear();
     }
+    const content = document.querySelector(".superBG div");
+    if (!content) {
+      return;
+    }
+    content.style.opacity = config.opacity / 100;
+    content.style.transform = `scale(${config.scale / 100})`;
+    const backgroundColor = Array.from(
+      document.querySelector(".contributedColorTheme").sheet.rules
+    )
+      .find((item) => item.cssText.startsWith(".monaco-workbench { background"))
+      .cssText.replace(/.*: /, "")
+      .replace(/; }/, "");
+    bg.style.backgroundColor = backgroundColor;
   }
 
   function setImage(imgPath) {

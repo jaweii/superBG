@@ -35,6 +35,9 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(decreaseScale);
   context.subscriptions.push(increaseEmulatedWidth);
   context.subscriptions.push(decreaseEmulatedWidth);
+  vscode.window.onDidChangeActiveColorTheme((kind) => {
+    superBG.asyncConfigFile();
+  });
 
   vscode.workspace.onDidChangeConfiguration(() => {
     superBG.asyncConfigFile();
@@ -48,5 +51,4 @@ export function deactivate() {
   if (folders && folders?.length > 0) {
     superBG.removeConfigFile(folders[0].name);
   }
-  // superBG.injecter.removeSuperBGFromWorkbench();
 }
